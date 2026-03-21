@@ -539,6 +539,7 @@ class Factory
         $dm->setDownloader('hg', new Downloader\HgDownloader($io, $config, $process, $fs));
         $dm->setDownloader('perforce', new Downloader\PerforceDownloader($io, $config, $process, $fs));
         $dm->setDownloader('zip', new Downloader\ZipDownloader($io, $config, $httpDownloader, $eventDispatcher, $cache, $fs, $process));
+        $dm->setDownloader('fair-zip', new Downloader\FairDownloader($io, $config, $httpDownloader, $eventDispatcher, $cache, $fs, $process));
         $dm->setDownloader('rar', new Downloader\RarDownloader($io, $config, $httpDownloader, $eventDispatcher, $cache, $fs, $process));
         $dm->setDownloader('tar', new Downloader\TarDownloader($io, $config, $httpDownloader, $eventDispatcher, $cache, $fs, $process));
         $dm->setDownloader('gzip', new Downloader\GzipDownloader($io, $config, $httpDownloader, $eventDispatcher, $cache, $fs, $process));

@@ -125,6 +125,7 @@ class RepositoryFactory
         $rm->setRepositoryClass('hg', 'Composer\Repository\VcsRepository');
         $rm->setRepositoryClass('artifact', 'Composer\Repository\ArtifactRepository');
         $rm->setRepositoryClass('path', 'Composer\Repository\PathRepository');
+        $rm->setRepositoryClass('fair', 'Composer\Repository\FairRepository');
 
         return $rm;
     }
