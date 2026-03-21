@@ -29,7 +29,7 @@ use Composer\IO\IOInterface;
 final class SignatureVerifier
 {
     public function __construct(
-        private readonly IOInterface $io,
+        private  IOInterface $io,
     ) {
     }
 

@@ -33,7 +33,7 @@ final class PackageFactory
         'wp-theme'  => 'wordpress-theme',
     ];
 
-    private readonly VersionParser $versionParser;
+    private  VersionParser $versionParser;
 
     public function __construct()
     {

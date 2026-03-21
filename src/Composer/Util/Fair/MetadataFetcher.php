@@ -26,7 +26,7 @@ final class MetadataFetcher
     private const ACCEPT_HEADER = 'application/json+fair;q=1.0, application/json;q=0.8';
 
     public function __construct(
-        private readonly HttpDownloader $httpDownloader,
+        private  HttpDownloader $httpDownloader,
     ) {
     }
 

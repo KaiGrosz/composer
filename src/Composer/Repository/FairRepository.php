@@ -45,10 +45,10 @@ use Composer\Util\ProcessExecutor;
 final class FairRepository extends ArrayRepository implements ConfigurableRepositoryInterface
 {
     /** @var array<string, mixed> */
-    private readonly array $repoConfig;
-    private readonly IOInterface $io;
-    private readonly HttpDownloader $httpDownloader;
-    private readonly Config $composerConfig;
+    private array $repoConfig;
+    private IOInterface $io;
+    private HttpDownloader $httpDownloader;
+    private Config $composerConfig;
 
     /**
      * Constructor signature matches RepositoryManager::createRepository().
@@ -56,13 +56,14 @@ final class FairRepository extends ArrayRepository implements ConfigurableReposi
      * @param array<string, mixed> $repoConfig
      */
     public function __construct(
-        array $repoConfig,
-        IOInterface $io,
-        Config $composerConfig,
-        HttpDownloader $httpDownloader,
+        array            $repoConfig,
+        IOInterface      $io,
+        Config           $composerConfig,
+        HttpDownloader   $httpDownloader,
         ?EventDispatcher $eventDispatcher = null,
         ?ProcessExecutor $process = null,
-    ) {
+    )
+    {
         parent::__construct();
         $this->repoConfig = $repoConfig;
         $this->io = $io;
@@ -133,10 +134,10 @@ final class FairRepository extends ArrayRepository implements ConfigurableReposi
                 ->then(
                     function (DidDocument $doc) use ($did, $cache, &$didDocuments): void {
                         $cache->setDidDocument($did, json_encode([
-                            'id'                 => $doc->id,
-                            'service'            => array_map(static fn (object $s): array => (array) $s, $doc->service),
-                            'verificationMethod' => array_map(static fn (object $v): array => (array) $v, $doc->verificationMethod),
-                            'alsoKnownAs'        => $doc->alsoKnownAs,
+                            'id' => $doc->id,
+                            'service' => array_map(static fn(object $s): array => (array)$s, $doc->service),
+                            'verificationMethod' => array_map(static fn(object $v): array => (array)$v, $doc->verificationMethod),
+                            'alsoKnownAs' => $doc->alsoKnownAs,
                         ], JSON_THROW_ON_ERROR));
                         $didDocuments[$did] = $doc;
                     },
@@ -197,22 +198,22 @@ final class FairRepository extends ArrayRepository implements ConfigurableReposi
                 ->then(
                     function (MetadataDocument $doc) use ($endpoint, $cache, &$metadataByEndpoint): void {
                         $cache->setMetadata($endpoint, json_encode([
-                            'id'           => $doc->id,
-                            'type'         => $doc->type,
-                            'name'         => $doc->name,
-                            'slug'         => $doc->slug,
-                            'license'      => $doc->license,
-                            'description'  => $doc->description,
-                            'authors'      => array_map(static fn (object $a): array => (array) $a, $doc->authors),
-                            'keywords'     => $doc->keywords,
-                            'filename'     => $doc->filename,
+                            'id' => $doc->id,
+                            'type' => $doc->type,
+                            'name' => $doc->name,
+                            'slug' => $doc->slug,
+                            'license' => $doc->license,
+                            'description' => $doc->description,
+                            'authors' => array_map(static fn(object $a): array => (array)$a, $doc->authors),
+                            'keywords' => $doc->keywords,
+                            'filename' => $doc->filename,
                             'last_updated' => $doc->lastUpdated,
-                            'releases'     => array_map(static fn (ReleaseDocument $r): array => [
-                                'version'   => $r->version,
+                            'releases' => array_map(static fn(ReleaseDocument $r): array => [
+                                'version' => $r->version,
                                 'artifacts' => $r->artifacts,
-                                'requires'  => $r->requires,
-                                'suggests'  => $r->suggests,
-                                'provides'  => $r->provides,
+                                'requires' => $r->requires,
+                                'suggests' => $r->suggests,
+                                'provides' => $r->provides,
                             ], $doc->releases),
                         ], JSON_THROW_ON_ERROR));
                         $metadataByEndpoint[$endpoint] = $doc;

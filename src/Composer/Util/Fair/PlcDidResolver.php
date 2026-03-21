@@ -26,7 +26,7 @@ final class PlcDidResolver
     private const PLC_DIRECTORY_URL = 'https://plc.directory/';
 
     public function __construct(
-        private readonly HttpDownloader $httpDownloader,
+        private  HttpDownloader $httpDownloader,
     ) {
     }
 

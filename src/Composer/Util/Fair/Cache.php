@@ -27,7 +27,7 @@ final class Cache
     private const DID_DOCUMENT_TTL = 3600;
     private const METADATA_TTL = 300;
 
-    private readonly string $cacheDir;
+    private string $cacheDir;
 
     public function __construct(Config $config)
     {

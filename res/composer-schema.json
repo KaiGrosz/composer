@@ -1088,7 +1088,8 @@
                 { "$ref": "#/definitions/path-repository" },
                 { "$ref": "#/definitions/artifact-repository" },
                 { "$ref": "#/definitions/pear-repository" },
-                { "$ref": "#/definitions/package-repository" }
+                { "$ref": "#/definitions/package-repository" },
+                { "$ref": "#/definitions/fair-repository" }
             ]
         },
         "anonymous-repository": {
@@ -1234,6 +1235,34 @@
                     }
                 },
                 "vendor-alias": { "type": "string" }
+            }
+        },
+        "fair-repository": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string", "enum": ["fair"] },
+                "vendor": { "type": "string", "description": "Default vendor prefix when package names are auto-derived from DID metadata slugs." },
+                "packages": {
+                    "type": "object",
+                    "description": "Map of package names to did:plc DIDs.",
+                    "additionalProperties": { "type": "string" }
+                },
+                "dids": {
+                    "type": "array",
+                    "description": "List of did:plc DIDs whose package names are derived from metadata slugs.",
+                    "items": { "type": "string" }
+                },
+                "canonical": { "type": "boolean" },
+                "only": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                },
+                "exclude": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
             }
         },
         "package-repository": {

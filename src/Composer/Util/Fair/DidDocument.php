@@ -30,10 +30,10 @@ final class DidDocument
      * @param list<string> $alsoKnownAs
      */
     public function __construct(
-        public readonly string $id,
-        public readonly array $service,
-        public readonly array $verificationMethod,
-        public readonly array $alsoKnownAs = [],
+        public  string $id,
+        public  array $service,
+        public  array $verificationMethod,
+        public  array $alsoKnownAs = [],
     ) {
     }
 

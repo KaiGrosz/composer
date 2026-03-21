@@ -31,11 +31,11 @@ final class ReleaseDocument
      * @param list<mixed>           $provides
      */
     public function __construct(
-        public readonly string $version,
-        public readonly object $artifacts,
-        public readonly array $requires = [],
-        public readonly array $suggests = [],
-        public readonly array $provides = [],
+        public  string $version,
+        public  object $artifacts,
+        public  array $requires = [],
+        public  array $suggests = [],
+        public  array $provides = [],
     ) {
     }
 

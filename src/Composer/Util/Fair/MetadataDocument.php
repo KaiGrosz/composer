@@ -25,17 +25,17 @@ final class MetadataDocument
      * @param list<string>                                 $keywords
      */
     public function __construct(
-        public readonly string $id,
-        public readonly string $type,
-        public readonly string $name,
-        public readonly string $slug,
-        public readonly string $license,
-        public readonly array $releases,
-        public readonly array $authors = [],
-        public readonly array $keywords = [],
-        public readonly ?string $description = null,
-        public readonly ?string $filename = null,
-        public readonly ?string $lastUpdated = null,
+        public  string $id,
+        public  string $type,
+        public  string $name,
+        public  string $slug,
+        public  string $license,
+        public  array $releases,
+        public  array $authors = [],
+        public  array $keywords = [],
+        public  ?string $description = null,
+        public  ?string $filename = null,
+        public  ?string $lastUpdated = null,
     ) {
     }
 
