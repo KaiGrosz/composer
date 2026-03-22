@@ -14,6 +14,7 @@ namespace Composer\Command;
 
 use Composer\Console\Input\InputArgument;
 use Composer\Console\Input\InputOption;
+use Composer\DependencyResolver\Request;
 use Composer\Factory;
 use Composer\Installer;
 use Composer\Json\JsonFile;
@@ -236,7 +237,7 @@ EOT
         $install
             ->setUpdate(true)
             ->setUpdateAllowList([$packageName])
-            ->setUpdateAllowTransitiveDependencies(Installer::UPDATE_LISTED_WITH_TRANSITIVE_DEPS);
+            ->setUpdateAllowTransitiveDependencies(Request::UPDATE_LISTED_WITH_TRANSITIVE_DEPS);
 
         return $install->run();
     }
