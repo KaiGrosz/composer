@@ -73,6 +73,13 @@ final class SignatureVerifier
      */
     public function verifySignature(string $filePath, string $signatureBase64Url, DidDocument $didDocument): bool
     {
+        if (!extension_loaded('sodium')) {
+            throw new \RuntimeException(
+                'FAIR: The "sodium" PHP extension is required for Ed25519 signature verification. '
+                . 'Install it with: pecl install libsodium, or enable it in your php.ini.',
+            );
+        }
+
         $signingKeys = $didDocument->getFairSigningKeys();
         if ($signingKeys === []) {
             $this->io->writeError('<error>FAIR: No signing keys found in DID document</error>');

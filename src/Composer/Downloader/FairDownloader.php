@@ -83,7 +83,16 @@ final class FairDownloader extends ZipDownloader
                 if ($signature !== null && $did !== null) {
                     $didDocument = $this->resolveDid($did);
 
-                    if (!$verifier->verifySignature($fileName, $signature, $didDocument)) {
+                    try {
+                        $verified = $verifier->verifySignature($fileName, $signature, $didDocument);
+                    } catch (\RuntimeException $e) {
+                        // Treat missing ext-sodium (or any other hard error) as irrecoverable
+                        // so Composer does not retry and gives the user a clear message.
+                        $this->filesystem->unlink($fileName);
+                        throw new IrrecoverableDownloadException($e->getMessage());
+                    }
+
+                    if (!$verified) {
                         $this->filesystem->unlink($fileName);
                         throw new IrrecoverableDownloadException(sprintf(
                             'FAIR: Signature verification failed for %s. The download has been removed.',
