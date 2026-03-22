@@ -16,7 +16,7 @@ use Composer\Exception\IrrecoverableDownloadException;
 use Composer\Package\PackageInterface;
 use Composer\Util\Fair\Cache;
 use Composer\Util\Fair\DidDocument;
-use Composer\Util\Fair\PlcDidResolver;
+use Composer\Util\Fair\DidResolver;
 use Composer\Util\Fair\SignatureVerifier;
 use React\Promise\PromiseInterface;
 
@@ -122,7 +122,7 @@ final class FairDownloader extends ZipDownloader
             }
         }
 
-        $resolver = new PlcDidResolver($this->httpDownloader);
+        $resolver = new DidResolver($this->httpDownloader);
 
         return $resolver->resolve($did);
     }

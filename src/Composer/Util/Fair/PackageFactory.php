@@ -29,8 +29,21 @@ final class PackageFactory
 {
     /** @var array<string, string> Maps FAIR type slugs to Composer package types */
     private const TYPE_MAP = [
-        'wp-plugin' => 'wordpress-plugin',
-        'wp-theme'  => 'wordpress-theme',
+        'wp-plugin'        => 'wordpress-plugin',
+        'wp-theme'         => 'wordpress-theme',
+        'typo3-extension'  => 'typo3-cms-extension',
+        'typo3-core'       => 'typo3-cms-core',
+    ];
+
+    /**
+     * Maps FAIR env:* require keys to their Composer platform package equivalents.
+     * Unknown env:* keys are silently skipped — they represent non-Composer runtimes.
+     *
+     * @var array<string, string>
+     */
+    private const ENV_REQUIRE_MAP = [
+        'env:php'    => 'php',
+        'env:typo3'  => 'typo3/cms-core',
     ];
 
     private  VersionParser $versionParser;
@@ -134,14 +147,24 @@ final class PackageFactory
         $links = [];
 
         foreach ($release->requires as $key => $constraintString) {
-            if ($key === 'env:php') {
-                try {
-                    $constraint = $this->versionParser->parseConstraints($constraintString);
-                } catch (\UnexpectedValueException) {
-                    continue;
-                }
-                $links['php'] = new Link($packageName, 'php', $constraint, Link::TYPE_REQUIRE, $constraintString);
+            $composerTarget = self::ENV_REQUIRE_MAP[$key] ?? null;
+            if ($composerTarget === null) {
+                continue; // unknown env:* key or non-Composer dependency — skip silently
             }
+
+            try {
+                $constraint = $this->versionParser->parseConstraints($constraintString);
+            } catch (\UnexpectedValueException) {
+                continue;
+            }
+
+            $links[$composerTarget] = new Link(
+                $packageName,
+                $composerTarget,
+                $constraint,
+                Link::TYPE_REQUIRE,
+                $constraintString,
+            );
         }
 
         return $links;

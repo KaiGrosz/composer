@@ -20,7 +20,7 @@ use Composer\Installer;
 use Composer\Json\JsonFile;
 use Composer\Json\JsonManipulator;
 use Composer\Util\Fair\MetadataFetcher;
-use Composer\Util\Fair\PlcDidResolver;
+use Composer\Util\Fair\DidResolver;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -101,8 +101,8 @@ EOT
         $constraint = $input->getOption('constraint');
         $dryRun = (bool) $input->getOption('dry-run');
 
-        if (!str_starts_with($did, 'did:plc:')) {
-            $io->writeError('<error>Invalid DID format. Only did:plc: DIDs are currently supported.</error>');
+        if (!DidResolver::isSupported($did)) {
+            $io->writeError('<error>Unsupported DID format. Supported methods: did:plc:, did:web:</error>');
 
             return 1;
         }
@@ -115,7 +115,7 @@ EOT
         // ------------------------------------------------------------------
         $io->write(sprintf('  - Resolving <info>%s</info>...', $did));
 
-        $resolver = new PlcDidResolver($httpDownloader);
+        $resolver = new DidResolver($httpDownloader);
         try {
             $didDocument = $resolver->resolve($did);
         } catch (\Throwable $e) {

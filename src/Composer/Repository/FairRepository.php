@@ -20,7 +20,7 @@ use Composer\Util\Fair\DidDocument;
 use Composer\Util\Fair\MetadataDocument;
 use Composer\Util\Fair\MetadataFetcher;
 use Composer\Util\Fair\PackageFactory;
-use Composer\Util\Fair\PlcDidResolver;
+use Composer\Util\Fair\DidResolver;
 use Composer\Util\Fair\ReleaseDocument;
 use Composer\Util\HttpDownloader;
 use Composer\Util\Loop;
@@ -97,7 +97,7 @@ final class FairRepository extends ArrayRepository implements ConfigurableReposi
         parent::initialize();
 
         $loop = new Loop($this->httpDownloader);
-        $resolver = new PlcDidResolver($this->httpDownloader);
+        $resolver = new DidResolver($this->httpDownloader);
         $fetcher = new MetadataFetcher($this->httpDownloader);
         $factory = new PackageFactory();
         $cache = new Cache($this->composerConfig);
