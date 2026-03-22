@@ -659,6 +659,7 @@ class Application extends BaseApplication
             new Command\ShowCommand(),
             new Command\SuggestsCommand(),
             new Command\RequireCommand(),
+            new Command\FairRequireCommand(),
             new Command\DumpAutoloadCommand(),
             new Command\StatusCommand(),
             new Command\ArchiveCommand(),
