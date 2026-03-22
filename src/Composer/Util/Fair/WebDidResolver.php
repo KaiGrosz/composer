@@ -81,22 +81,32 @@ final class WebDidResolver
     }
 
     /**
-     * Convert a did:web DID to its HTTPS document URL.
+     * Convert a did:web DID to its document URL.
      *
      * did:web:example.com              → https://example.com/.well-known/did.json
      * did:web:example.com:path:to:pkg  → https://example.com/path/to/pkg/did.json
+     * did:web:localhost%3A8080         → http://localhost:8080/.well-known/did.json
+     *
+     * Per the W3C did:web spec the domain component MUST be percent-decoded before
+     * constructing the URL (e.g. %3A → : for port numbers).
+     * localhost/127.0.0.1 uses http:// to support local development and testing
+     * without requiring a TLS certificate.
      */
     public function toUrl(string $did): string
     {
         $identifier = substr($did, strlen('did:web:'));
         $parts = explode(':', $identifier);
-        $domain = array_shift($parts);
+        $domain = rawurldecode((string) array_shift($parts));
+
+        // Strip port for scheme decision, keep full domain (host:port) in URL.
+        $host = explode(':', $domain)[0];
+        $scheme = ($host === 'localhost' || $host === '127.0.0.1') ? 'http' : 'https';
 
         if ($parts === []) {
-            return 'https://' . $domain . '/.well-known/did.json';
+            return $scheme . '://' . $domain . '/.well-known/did.json';
         }
 
-        return 'https://' . $domain . '/' . implode('/', array_map('rawurldecode', $parts)) . '/did.json';
+        return $scheme . '://' . $domain . '/' . implode('/', array_map('rawurldecode', $parts)) . '/did.json';
     }
 
     private function validateDid(string $did): void
